@@ -1,11 +1,13 @@
 import { parse } from 'node-html-parser';
 
+declare let global: any;
+
 interface BookData {
   title: string;
   href: string;
 }
 
-export function main() {
+function createBookDataList(): BookData[] {
   const res = UrlFetchApp.fetch('https://yapi.ta2o.net/kndlsl/hgwr/');
   const html = res.getContentText('UTF-8');
   
@@ -27,7 +29,20 @@ export function main() {
     })
   });
   
+  return list;
+}
+
+function doPost(e): void {
+  // TODO: verify token
+ 
+  // スラッシュコマンドのレスポンスとして表示したほうがいいかも
+  send(createBookDataList());
   
+  return ContentService.createTextOutput();
+}
+global.doPost = doPost;
+
+function send(list: BookData[]) {
   const headers = { "Content-type": "application/json" };
   const payload = createPayload(list);
   const options = {
@@ -39,8 +54,6 @@ export function main() {
   
   UrlFetchApp.fetch(PropertiesService.getScriptProperties().getProperty('SLACK_AMAZON_CHANNEL'), options);
 }
-declare let global: any;
-global.main = main;
 
 function createPayload(list: BookData[]) {
   const fields = list.map(function (bookData: BookData) {
