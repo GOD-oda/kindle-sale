@@ -1,0 +1,4 @@
+.idea
+.clasp.json
+node_modules
+dist/main.js

@@ -1,0 +1,14 @@
+{
+  "name": "kindle-sale",
+  "version": "0.0.1",
+  "dependencies": {
+    "esbuild": "0.17.18",
+    "typescript": "^5.0.4"
+  },
+  "scripts": {
+    "build": "node build.js"
+  },
+  "devDependencies": {
+    "esbuild-gas-plugin": "^0.5.0"
+  }
+}
