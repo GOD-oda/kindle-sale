@@ -56,18 +56,20 @@ function send(list: BookData[]) {
 }
 
 function createPayload(list: BookData[]) {
-  const fields = list.map(function (bookData: BookData) {
+  const attachments = list.map(function (bookData: BookData) {
     return {
-      value: Utilities.formatString('<%s | %s>', bookData.href, bookData.title)
+      color: "36a64f",
+      fields: [
+        {
+          value: Utilities.formatString('<%s | %s>', bookData.href, bookData.title)
+        }
+      ]
     };
   });
   
   return {
     username: 'Kindle日替わりセール',
-    attachments: [{
-      color: "36a64f",
-      fields: fields
-    }],
+    attachments: attachments,
     icon_emoji: ':kindle_logo_icon:'
   };
 }
